@@ -1,5 +1,5 @@
-import { error } from 'console';
-import { GraphQLFormattedError } from 'graphql';
+import { error } from "console";
+import { GraphQLFormattedError } from "graphql";
 
 type Error = {
   message: string;
@@ -7,7 +7,7 @@ type Error = {
 };
 
 const customFetch = async (url: string, options: RequestInit) => {
-  const accessToken = localStorage.getItem('access_token');
+  const accessToken = localStorage.getItem("access_token");
 
   const headers = options.headers as Record<string, string>;
   return await fetch(url, {
@@ -15,26 +15,26 @@ const customFetch = async (url: string, options: RequestInit) => {
     headers: {
       ...headers,
       Authorization: headers?.Authorization || `Bearer ${accessToken}`,
-      'Content-Type': 'applicatoin/json',
-      'Apollo-Require-Preflight': 'true',
+      "Content-Type": "applicatoin/json",
+      "Apollo-Require-Preflight": "true",
     },
   });
 };
 
 const getGraphQLErrors = (
-  body: Record<'errors', GraphQLFormattedError[] | undefined>,
+  body: Record<"errors", GraphQLFormattedError[] | undefined>,
 ): Error | null => {
   if (!body) {
     return {
-      message: 'Unknown error!',
-      statusCode: 'INTERNAL_SERVER_ERROR',
+      message: "Unknown error!",
+      statusCode: "INTERNAL_SERVER_ERROR",
     };
   }
 
-  if ('errors' in body) {
+  if ("errors" in body) {
     const errors = body?.errors;
 
-    const messages = errors?.map((err) => err?.message)?.join('');
+    const messages = errors?.map((err) => err?.message)?.join("");
     const code = errors?.[0]?.extensions?.code;
 
     return {
@@ -58,4 +58,4 @@ const fetchWrapper = async (url: string, options: RequestInit) => {
   return response;
 };
 
-export default fetchWrapper
+export default fetchWrapper;
