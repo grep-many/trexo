@@ -14,7 +14,7 @@ const CustomAvatar = ({ name, style, ...rest }: Props) => {
         display: "flex",
         alignItems: "center",
         border: "none",
-        ...style
+        ...style,
       }}
       {...rest}
     >

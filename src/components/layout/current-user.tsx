@@ -1,5 +1,6 @@
 import { Popover } from "antd";
 import CustomAvatar from "../custom-avatar";
+// import { User } from "@/graphql/schema.types";
 // import { useGetIdentity } from "@refinedev/core";
 
 const CurrentUser = () => {
