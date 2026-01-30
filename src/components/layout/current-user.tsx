@@ -5,6 +5,7 @@ import { User } from "@/graphql/schema.types";
 import { useGetIdentity } from "@refinedev/core";
 import { Text } from "../text";
 import React from "react";
+import { AccountSettings } from "./account-settings";
 
 const CurrentUser = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -55,10 +56,7 @@ const CurrentUser = () => {
           style={{ cursor: "pointer" }}
         />
       </Popover>
-      {/* 
-        TODO: Create a accountSettings
-        {user && <AccountSettings opened={isOpen} setIsOpened={setIsOpen} user={user}/>} 
-      */}
+      {user && <AccountSettings opened={isOpen} setOpened={setIsOpen} userId={user.id} />}
     </>
   );
 };
