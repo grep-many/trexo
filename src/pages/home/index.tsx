@@ -1,7 +1,12 @@
-import { DashboardTotalCountCard, DealsChart, UpcomingEvents } from "@/components";
+import {
+  DashboardTotalCountCard,
+  DealsChart,
+  UpcomingEvents,
+  LatestActivities,
+} from "@/components";
 import { DASHBOARD_TOTAL_COUNTS_QUERY } from "@/graphql/queries";
 import { DashboardTotalCountsQuery } from "@/graphql/types";
-import { useApiUrl, useCustom } from "@refinedev/core";
+import { useCustom } from "@refinedev/core";
 import { Col, Row } from "antd";
 
 export const Home = () => {
@@ -44,6 +49,13 @@ export const Home = () => {
         </Col>
         <Col xs={24} sm={24} xl={16} style={{ height: "460px" }}>
           <DealsChart />
+        </Col>
+      </Row>
+
+      <Row gutter={[32, 32]} style={{ marginTop: "32px" }}>
+        {" "}
+        <Col xs={24}>
+          <LatestActivities />
         </Col>
       </Row>
     </div>

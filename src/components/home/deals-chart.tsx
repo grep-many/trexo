@@ -36,8 +36,9 @@ const DealsChart = () => {
     startOnZero: false,
     smooth: true,
     legend: {
-      offsetX: -6,
+      offsetX: 6,
     },
+    color: ["#ff4d4f", "#52c41a"],
     yAxis: {
       tickCount: 4,
       label: {
