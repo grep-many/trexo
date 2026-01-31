@@ -51,24 +51,22 @@ const sizes = {
 };
 
 // a custom Text component that wraps/extends the antd Typography.Text component
-export const Text = ({ size = "sm", children, ...rest }: TextProps) => {
-  return (
-    // config provider is a top-level component that allows us to customize the global properties of antd components. For example, default antd theme
-    // token is a term used by antd to refer to the design tokens like font size, font weight, color, etc
-    // https://ant.design/docs/react/customize-theme#customize-design-token
-    <ConfigProvider
-      theme={{
-        token: {
-          ...sizes[size],
-        },
-      }}
-    >
-      {/**
-       * Typography.Text is a component from antd that allows us to render text
-       * Typography has different components like Title, Paragraph, Text, Link, etc
-       * https://ant.design/components/typography/#Typography.Text
-       */}
-      <Typography.Text {...rest}>{children}</Typography.Text>
-    </ConfigProvider>
-  );
-};
+export const Text = ({ size = "sm", children, ...rest }: TextProps) => (
+  // config provider is a top-level component that allows us to customize the global properties of antd components. For example, default antd theme
+  // token is a term used by antd to refer to the design tokens like font size, font weight, color, etc
+  // https://ant.design/docs/react/customize-theme#customize-design-token
+  <ConfigProvider
+    theme={{
+      token: {
+        ...sizes[size],
+      },
+    }}
+  >
+    {/**
+     * Typography.Text is a component from antd that allows us to render text
+     * Typography has different components like Title, Paragraph, Text, Link, etc
+     * https://ant.design/components/typography/#Typography.Text
+     */}
+    <Typography.Text {...rest}>{children}</Typography.Text>
+  </ConfigProvider>
+);
