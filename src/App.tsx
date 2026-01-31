@@ -11,7 +11,15 @@ import routerProvider, {
 } from "@refinedev/react-router";
 import { App as AntdApp } from "antd";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router";
-import { CompanyList, CreateCompany, ForgotPassword, Home, Login, Register } from "./pages";
+import {
+  CompanyList,
+  CreateCompany,
+  EditCompany,
+  ForgotPassword,
+  Home,
+  Login,
+  Register,
+} from "./pages";
 import Layout from "./components/layout";
 import { resources } from "./config/resources";
 
@@ -58,6 +66,7 @@ function App() {
                   <Route path="/companies">
                     <Route index element={<CompanyList />} />
                     <Route path="new" element={<CreateCompany />} />
+                    <Route path="edit/:id" element={<EditCompany />} />
                   </Route>
                 </Route>
               </Routes>

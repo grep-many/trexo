@@ -35,7 +35,7 @@ export const CreateCompany = () => {
     },
   });
 
-  const { options, query } = useSelect<GetFieldsFromList<UsersSelectQuery>>({
+  const { query } = useSelect<GetFieldsFromList<UsersSelectQuery>>({
     resource: "users",
     optionLabel: "name",
     meta: {
@@ -68,7 +68,9 @@ export const CreateCompany = () => {
                   />
                 ),
               }))}
-              optionFilterProp="label"
+              filterOption={(input, option) =>
+                option?.label?.props?.name?.toLowerCase().includes(input.toLowerCase())
+              }
               showSearch
               loading={query.isLoading}
             />
