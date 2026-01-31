@@ -1,9 +1,9 @@
-import { ThemedLayout, ThemedTitle } from "@refinedev/antd";
+import { ThemedLayout, ThemedSider } from "@refinedev/antd";
 import Header from "./header";
 import React from "react";
 
 const Layout = ({ children }: React.PropsWithChildren) => (
-  <ThemedLayout Header={Header} Title={(props) => <ThemedTitle {...props} text={<>Trexo</>} />}>
+  <ThemedLayout Header={Header} Sider={(props) => <ThemedSider {...props} fixed />}>
     {children}
   </ThemedLayout>
 );

@@ -11,7 +11,7 @@ import routerProvider, {
 } from "@refinedev/react-router";
 import { App as AntdApp } from "antd";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router";
-import { ForgotPassword, Home, Login, Register } from "./pages";
+import { CompanyList, ForgotPassword, Home, Login, Register } from "./pages";
 import Layout from "./components/layout";
 import { resources } from "./config/resources";
 
@@ -55,11 +55,16 @@ function App() {
                   }
                 >
                   <Route index element={<Home />} />
+                  <Route path="/companies" element={<CompanyList />} />
                 </Route>
               </Routes>
               <RefineKbar />
               <UnsavedChangesNotifier />
-              <DocumentTitleHandler />
+              <DocumentTitleHandler
+                handler={({ resource }) =>
+                  resource ? `${resource?.meta?.label} | Trexo` : "Trexo"
+                }
+              />
             </Refine>
             <DevtoolsPanel />
           </DevtoolsProvider>
