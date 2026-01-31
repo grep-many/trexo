@@ -7,6 +7,7 @@ import KanbanColumnSkeleton from "./skeleton/kanban";
 import ProjectCardSkeleton from "./skeleton/project-card";
 import LatestActivitiesSkeleton from "./skeleton/latest-activities";
 import LatestActivities from "./home/latest-activities";
+import SelectOptionsWithAvatar from "./select-option-with-avatar";
 
 export {
   UpcomingEvents,
@@ -18,4 +19,5 @@ export {
   LatestActivitiesSkeleton,
   ProjectCardSkeleton,
   LatestActivities,
+  SelectOptionsWithAvatar,
 };
