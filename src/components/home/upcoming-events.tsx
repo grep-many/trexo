@@ -1,10 +1,10 @@
 import { CalendarOutlined, CalendarTwoTone } from "@ant-design/icons";
 import { Badge, Card, List } from "antd";
 import { Text } from "../text";
-import { UpcomingEventsSkeleton } from "../skeletons";
 import { getDate } from "@/utils/helpers";
 import { useList } from "@refinedev/core";
 import { DASHBORAD_CALENDAR_UPCOMING_EVENTS_QUERY } from "@/graphql/queries";
+import UpcomingEventsSkeleton from "../skeleton/upcoming-events";
 
 const UpcomingEvents = () => {
   const { result, query } = useList({
