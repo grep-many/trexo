@@ -96,7 +96,7 @@ export const TitleForm = ({ initialValues, isLoading }: Props) => {
   // set the title of the form to the title of the task
   React.useEffect(() => {
     formProps.form?.setFieldsValue(initialValues);
-  }, [initialValues.title]);
+  }, [initialValues.title, formProps.form, initialValues]);
 
   if (isLoading) {
     return <Skeleton.Input size="small" style={{ width: "95%", height: "22px" }} block />;

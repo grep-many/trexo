@@ -59,7 +59,7 @@ const ProjectCard = ({ id, title, dueDate, users }: Props) => {
       },
     ];
     return dropdownItems;
-  }, []);
+  }, [id, edit, mutate]);
 
   const dueDateOptions = React.useMemo(() => {
     if (!dueDate) return null;
@@ -93,6 +93,8 @@ const ProjectCard = ({ id, title, dueDate, users }: Props) => {
             trigger={["click"]}
             menu={{
               items: dropdownItems,
+              onPointerDown: (e) => e.stopPropagation(),
+              onClick: (e) => e.domEvent.stopPropagation(),
             }}
             placement="bottom"
             arrow={{ pointAtCenter: true }}

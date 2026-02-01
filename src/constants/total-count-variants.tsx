@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { AuditOutlined, ShopOutlined, TeamOutlined } from "@ant-design/icons";
 
 const IconWrapper = ({ color, children }: React.PropsWithChildren<{ color: string }>) => {

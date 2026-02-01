@@ -67,6 +67,6 @@ export const Text = ({ size = "sm", children, ...rest }: TextProps) => (
      * Typography has different components like Title, Paragraph, Text, Link, etc
      * https://ant.design/components/typography/#Typography.Text
      */}
-    <Typography.Text {...rest}>{children}</Typography.Text>
+    <Typography.Text onClick={e=>e.stopPropagation()} onPointerDown={e=>e.stopPropagation()} {...rest}>{children}</Typography.Text>
   </ConfigProvider>
 );

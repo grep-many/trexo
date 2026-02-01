@@ -30,17 +30,7 @@ export const EditCompany = () => {
   });
 
   const company = query?.data?.data ?? {};
-  const {
-    avatarUrl,
-    name,
-    salesOwner,
-    companySize,
-    totalRevenue,
-    industry,
-    businessType,
-    country,
-    website,
-  } = company;
+  const { avatarUrl, name, salesOwner } = company;
 
   return (
     <div>
