@@ -19,6 +19,7 @@ import {
   Home,
   Login,
   Register,
+  TaskList,
 } from "./pages";
 import Layout from "./components/layout";
 import { resources } from "./config/resources";
@@ -67,6 +68,9 @@ function App() {
                     <Route index element={<CompanyList />} />
                     <Route path="new" element={<CreateCompany />} />
                     <Route path="edit/:id" element={<EditCompany />} />
+                  </Route>
+                  <Route path="/tasks">
+                    <Route index element={<TaskList />} />
                   </Route>
                 </Route>
               </Routes>

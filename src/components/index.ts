@@ -8,7 +8,11 @@ import ProjectCardSkeleton from "./skeleton/project-card";
 import LatestActivitiesSkeleton from "./skeleton/latest-activities";
 import LatestActivities from "./home/latest-activities";
 import SelectOptionsWithAvatar from "./select-option-with-avatar";
+import KanbanColumn from "./tasks/kanban/column";
+import KanbanItem from "./tasks/kanban/item";
+import ProjectCardMemo from "./tasks/card";
 
+export * from "./tasks/kanban/board";
 export {
   UpcomingEvents,
   DealsChart,
@@ -20,4 +24,7 @@ export {
   ProjectCardSkeleton,
   LatestActivities,
   SelectOptionsWithAvatar,
+  KanbanColumn,
+  KanbanItem,
+  ProjectCardMemo,
 };
