@@ -87,7 +87,7 @@ const ProjectCard = ({ id, title, dueDate, users }: Props) => {
       <Card
         size="small"
         title={<Text ellipsis={{ tooltip: title }}>{title}</Text>}
-        onClick={() => edit()}
+        onClick={() => edit("tasks", id, "replace")}
         extra={
           <Dropdown
             trigger={["click"]}
@@ -169,8 +169,7 @@ const ProjectCardMemo = React.memo(ProjectCard, (prev, next) => {
     prev.id === next.id &&
     prev.title === next.title &&
     prev.dueDate === next.dueDate &&
-    prev.users?.length === next.users?.length &&
-    prev.updatedAt === next.updatedAt
+    prev.users?.length === next.users?.length
   );
 });
 

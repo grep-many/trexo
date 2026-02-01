@@ -13,7 +13,7 @@ import { TASK_STAGES_QUERY, TASKS_QUERY } from "@/graphql/queries";
 import { TaskStage } from "@/graphql/schema.types";
 import { TasksQuery } from "@/graphql/types";
 import { DragEndEvent } from "@dnd-kit/core";
-import { useList, useUpdate } from "@refinedev/core";
+import { useGo, useList, useUpdate } from "@refinedev/core";
 import { GetFieldsFromList } from "@refinedev/nestjs-query";
 import React from "react";
 
@@ -22,6 +22,7 @@ type KanbanStage = Omit<TaskStage, "tasks"> & {
 };
 
 export const TaskList = ({ children }: React.PropsWithChildren) => {
+  const go = useGo();
   const { result: stages, query: stagesQuery } = useList<TaskStage>({
     resource: "taskStages",
     meta: {
@@ -88,7 +89,14 @@ export const TaskList = ({ children }: React.PropsWithChildren) => {
 
   if (isLoading) return <PageSkeleton />;
 
-  const handleAddCard = (args: { stageId: string | "unassigned" }) => {};
+  const handleAddCard = (args: { stageId: string | "unassigned" }) => {
+    const path =
+      args.stageId === "unassigned" ? "/tasks/new" : `/tasks/new?stageId=${args.stageId}`;
+    go({
+      to: path,
+      type: "replace",
+    });
+  };
 
   const handleOnDragEnd = (event: DragEndEvent) => {
     let stageId = event.over?.id as undefined | string | null;

@@ -69,6 +69,9 @@ export const CompanyList = ({ children }: Props) => {
         )}
       >
         <Table
+          style={{
+            overflowX: "hidden",
+          }}
           loading={tableQuery.isLoading}
           dataSource={tableQuery.data?.data}
           pagination={{

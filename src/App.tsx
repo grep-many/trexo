@@ -14,7 +14,9 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router";
 import {
   CompanyList,
   CreateCompany,
+  CreateTask,
   EditCompany,
+  EditTask,
   ForgotPassword,
   Home,
   Login,
@@ -69,8 +71,16 @@ function App() {
                     <Route path="new" element={<CreateCompany />} />
                     <Route path="edit/:id" element={<EditCompany />} />
                   </Route>
-                  <Route path="/tasks">
-                    <Route index element={<TaskList />} />
+                  <Route
+                    path="/tasks"
+                    element={
+                      <TaskList>
+                        <Outlet />
+                      </TaskList>
+                    }
+                  >
+                    <Route path="new" element={<CreateTask />} />
+                    <Route path="edit/:id" element={<EditTask />} />
                   </Route>
                 </Route>
               </Routes>

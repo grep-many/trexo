@@ -7,7 +7,7 @@ import { UsersSelectQuery } from "@/graphql/types";
 import { getNameInitials } from "@/utils";
 import { Edit, useForm, useSelect } from "@refinedev/antd";
 import { GetFieldsFromList } from "@refinedev/nestjs-query";
-import { Col, Form, Input, InputNumber, Row, Select, Space } from "antd";
+import { Col, Form, Input, InputNumber, Row, Select } from "antd";
 import { CompanyContactsTable } from "./contacts-table";
 
 export const EditCompany = () => {
@@ -47,7 +47,7 @@ export const EditCompany = () => {
       <Row gutter={[32, 32]}>
         <Col xs={24} xl={12}>
           <Edit isLoading={formLoading} saveButtonProps={saveButtonProps} breadcrumb={false}>
-            <Form {...formProps} layout="vertical">
+            <Form form={formProps.form} {...formProps} layout="vertical">
               <CustomAvatar
                 shape="square"
                 src={avatarUrl}
@@ -85,7 +85,7 @@ export const EditCompany = () => {
               </Form.Item>
 
               {/* Company Size */}
-              <Form.Item label="Company Size" name="companySize" initialValue={companySize}>
+              <Form.Item label="Company Size" name="companySize">
                 <Select
                   options={companySizeOptions}
                   placeholder="Company Size"
@@ -95,7 +95,7 @@ export const EditCompany = () => {
               </Form.Item>
 
               {/* Revenue */}
-              <Form.Item label="Revenue" name="totalRevenue" initialValue={totalRevenue ?? 0}>
+              <Form.Item label="Revenue" name="totalRevenue">
                 <InputNumber
                   autoFocus
                   formatter={(value) =>
@@ -106,7 +106,7 @@ export const EditCompany = () => {
               </Form.Item>
 
               {/* Industry */}
-              <Form.Item label="Industry" name="industry" initialValue={industry}>
+              <Form.Item label="Industry" name="industry">
                 <Select
                   placeholder="Industry"
                   options={industryOptions}
@@ -116,7 +116,7 @@ export const EditCompany = () => {
               </Form.Item>
 
               {/* Business Type */}
-              <Form.Item label="Business Type" name="businessType" initialValue={businessType}>
+              <Form.Item label="Business Type" name="businessType">
                 <Select
                   placeholder="Business Type"
                   options={businessTypeOptions}
@@ -126,12 +126,12 @@ export const EditCompany = () => {
               </Form.Item>
 
               {/* Country */}
-              <Form.Item label="Country" name="country" initialValue={country}>
+              <Form.Item label="Country" name="country">
                 <Input placeholder="Country" />
               </Form.Item>
 
               {/* Website */}
-              <Form.Item label="Website" name="website" initialValue={website}>
+              <Form.Item label="Website" name="website">
                 <Input placeholder="Website" />
               </Form.Item>
             </Form>
