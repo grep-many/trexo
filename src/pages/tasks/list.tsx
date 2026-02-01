@@ -1,18 +1,27 @@
 import {
+  KanbanAddCardButton,
   KanbanBoard,
   KanbanBoardContainer,
   KanbanColumn,
+  KanbanColumnSkeleton,
   KanbanItem,
   ProjectCardMemo,
+  ProjectCardSkeleton,
 } from "@/components";
+import { UPDATE_TASK_STAGE_MUTATION } from "@/graphql/mutations";
 import { TASK_STAGES_QUERY, TASKS_QUERY } from "@/graphql/queries";
 import { TaskStage } from "@/graphql/schema.types";
 import { TasksQuery } from "@/graphql/types";
-import { useList } from "@refinedev/core";
+import { DragEndEvent } from "@dnd-kit/core";
+import { useList, useUpdate } from "@refinedev/core";
 import { GetFieldsFromList } from "@refinedev/nestjs-query";
 import React from "react";
 
-export const TaskList = () => {
+type KanbanStage = Omit<TaskStage, "tasks"> & {
+  tasks: GetFieldsFromList<TasksQuery>[];
+};
+
+export const TaskList = ({ children }: React.PropsWithChildren) => {
   const { result: stages, query: stagesQuery } = useList<TaskStage>({
     resource: "taskStages",
     meta: {
@@ -52,6 +61,8 @@ export const TaskList = () => {
     },
   });
 
+  const { mutate: updateTask } = useUpdate();
+
   const taskStages = React.useMemo(() => {
     if (!tasks?.data || !stages?.data) {
       return {
@@ -62,7 +73,7 @@ export const TaskList = () => {
 
     const unassignedStage = tasks.data.filter((task) => task.stageId === null);
 
-    const grouped: TaskStage[] = stages.data.map((stage) => ({
+    const grouped: KanbanStage[] = stages.data.map((stage) => ({
       ...stage,
       tasks: tasks.data.filter((task) => task.stageId?.toString() === stage.id),
     }));
@@ -73,12 +84,43 @@ export const TaskList = () => {
     };
   }, [stages, tasks]);
 
-  const handleAddCard = (args: { stageId: string }) => {};
+  const isLoading = stagesQuery.isLoading || tasksQuery.isLoading;
+
+  if (isLoading) return <PageSkeleton />;
+
+  const handleAddCard = (args: { stageId: string | "unassigned" }) => {};
+
+  const handleOnDragEnd = (event: DragEndEvent) => {
+    let stageId = event.over?.id as undefined | string | null;
+    const taskId = event.active.id as string;
+
+    const taskStageId = event.active.data.current?.stageId;
+
+    if (taskStageId === stageId) return;
+
+    if (stageId === "unassigned") {
+      stageId = null;
+    }
+
+    updateTask({
+      resource: "tasks",
+      id: taskId,
+      values: {
+        stageId,
+      },
+      successNotification: false,
+      mutationMode: "optimistic",
+      meta: {
+        gqlMutation: UPDATE_TASK_STAGE_MUTATION,
+      },
+    });
+  };
 
   return (
     <>
+      {children}
       <KanbanBoardContainer>
-        <KanbanBoard>
+        <KanbanBoard onDragEnd={handleOnDragEnd}>
           <KanbanColumn
             id="unassigned"
             title="unassigned"
@@ -90,9 +132,48 @@ export const TaskList = () => {
                 <ProjectCardMemo {...task} dueDate={task.dueDate || undefined} />
               </KanbanItem>
             ))}
+            {!taskStages.unassignedStage.length && (
+              <KanbanAddCardButton onClick={() => handleAddCard({ stageId: "unassigned" })} />
+            )}
           </KanbanColumn>
+          {taskStages.columns?.map((column) => (
+            <KanbanColumn
+              key={column.id}
+              id={column.id}
+              title={column.title}
+              count={column.tasks.length}
+              onAddClick={() => handleAddCard({ stageId: column.id })}
+            >
+              {!isLoading &&
+                column.tasks?.map((task) => (
+                  <KanbanItem key={task.id} id={task.id} data={task}>
+                    <ProjectCardMemo {...task} dueDate={task.dueDate || undefined} />
+                  </KanbanItem>
+                ))}
+              {!column.tasks.length && (
+                <KanbanAddCardButton onClick={() => handleAddCard({ stageId: "unassigned" })} />
+              )}
+            </KanbanColumn>
+          ))}
         </KanbanBoard>
       </KanbanBoardContainer>
     </>
+  );
+};
+
+const PageSkeleton = () => {
+  const columnCount = 6;
+  const itemCount = 4;
+
+  return (
+    <KanbanBoardContainer>
+      {Array.from({ length: columnCount }).map((_, index) => (
+        <KanbanColumnSkeleton key={index}>
+          {Array.from({ length: itemCount }).map((_, index) => (
+            <ProjectCardSkeleton key={index} />
+          ))}
+        </KanbanColumnSkeleton>
+      ))}
+    </KanbanBoardContainer>
   );
 };

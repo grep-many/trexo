@@ -16,11 +16,11 @@ import { ClockCircleOutlined, DeleteOutlined, EyeOutlined, MoreOutlined } from "
 import { TextIcon } from "../text-icon";
 import { formatDate, getDateColor } from "@/utils";
 import CustomAvatar from "../custom-avatar";
+import { useDelete, useNavigation } from "@refinedev/core";
 
 type Props = {
   id: string;
   title: string;
-  updatedAt: string;
   dueDate?: string;
   users?: {
     id: string;
@@ -29,10 +29,11 @@ type Props = {
   }[];
 };
 
-const ProjectCard = ({ id, title, updatedAt, dueDate, users }: Props) => {
+const ProjectCard = ({ id, title, dueDate, users }: Props) => {
   const { token } = theme.useToken();
 
-  const edit = () => {};
+  const { edit } = useNavigation();
+  const { mutate } = useDelete();
 
   const dropdownItems = React.useMemo(() => {
     const dropdownItems: MenuProps["items"] = [
@@ -40,14 +41,21 @@ const ProjectCard = ({ id, title, updatedAt, dueDate, users }: Props) => {
         label: "View Card",
         key: 1,
         icon: <EyeOutlined />,
-        onClick: () => edit(),
+        onClick: () => edit("tasks", id, "replace"),
       },
       {
         danger: true,
         label: "Delete Card",
         key: 2,
         icon: <DeleteOutlined />,
-        onClick: () => {},
+        onClick: () =>
+          mutate({
+            resource: "tasks",
+            id,
+            meta: {
+              operation: "task",
+            },
+          }),
       },
     ];
     return dropdownItems;
@@ -55,7 +63,6 @@ const ProjectCard = ({ id, title, updatedAt, dueDate, users }: Props) => {
 
   const dueDateOptions = React.useMemo(() => {
     if (!dueDate) return null;
-    // TODO: Check the date format
     const date = formatDate(dueDate);
 
     return {

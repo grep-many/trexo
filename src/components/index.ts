@@ -11,6 +11,7 @@ import SelectOptionsWithAvatar from "./select-option-with-avatar";
 import KanbanColumn from "./tasks/kanban/column";
 import KanbanItem from "./tasks/kanban/item";
 import ProjectCardMemo from "./tasks/card";
+import KanbanAddCardButton from "./tasks/kanban/add-card-button";
 
 export * from "./tasks/kanban/board";
 export {
@@ -27,4 +28,5 @@ export {
   KanbanColumn,
   KanbanItem,
   ProjectCardMemo,
+  KanbanAddCardButton,
 };
