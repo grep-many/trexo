@@ -28,7 +28,7 @@ import { resources } from "./config/resources";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={"/" + import.meta.env.VITE_BASE_PATH || "/"}>
       <RefineKbarProvider>
         <AntdApp>
           <DevtoolsProvider>
